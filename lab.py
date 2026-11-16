@@ -6,7 +6,7 @@ items = {
     'p': {'survival': 15, 'cells': 2},   # Пистолет
     'a': {'survival': 15, 'cells': 2},   # Боекомплект
     'm': {'survival': 20, 'cells': 2},   # Аптечка
-    #'i': {'survival': 5,  'cells': 1},   # Ингалятор
+    'i': {'survival': 5,  'cells': 1},   # Ингалятор
     'k': {'survival': 15, 'cells': 1},   # Нож
     'x': {'survival': 20, 'cells': 3},   # Топор
     't': {'survival': 25, 'cells': 1},   # Оберег
@@ -49,9 +49,6 @@ def gen_table_memo(items, cells=MAX_CELLS):
     return table
 
 
-def find_result(table):
-    pass
-
-
 if __name__ == "__main__":
     table = gen_table_memo(items)
+    print(table)
