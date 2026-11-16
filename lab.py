@@ -1,17 +1,26 @@
-MAX_CELLS = 4
+MAX_CELLS = 7
+POINTS = 25
 
 items = {
-    'a': {'price': 700, 'cells': 3},
-    'b': {'price': 300, 'cells': 1},
-    'c': {'price': 500, 'cells': 2},
-    'd': {'price': 550, 'cells': 2}
+    'r': {'survival': 25, 'cells': 3},   # Винтовка
+    'p': {'survival': 15, 'cells': 2},   # Пистолет
+    'a': {'survival': 15, 'cells': 2},   # Боекомплект
+    'm': {'survival': 20, 'cells': 2},   # Аптечка
+    #'i': {'survival': 5,  'cells': 1},   # Ингалятор
+    'k': {'survival': 15, 'cells': 1},   # Нож
+    'x': {'survival': 20, 'cells': 3},   # Топор
+    't': {'survival': 25, 'cells': 1},   # Оберег
+    'f': {'survival': 15, 'cells': 1},   # Фляжка
+    'd': {'survival': 10, 'cells': 1},   # Антидот
+    's': {'survival': 20, 'cells': 2},   # Еда
+    'c': {'survival': 20, 'cells': 2},   # Арбалет
 }
 
 
 def gen_table_memo(items, cells=MAX_CELLS):
     table = [[0 for _ in range(cells)] for _ in range(len(items.keys()))]
     for row, item in enumerate(items.values()):
-        price = item['price']
+        price = item['survival']
         cell = item['cells']
 
         for col, cells_curr in enumerate(range(1, cells + 1)):
@@ -37,9 +46,12 @@ def gen_table_memo(items, cells=MAX_CELLS):
 
             table[row][col] = max(prev_price, res_price)
 
-    print(table)
+    return table
 
+
+def find_result(table):
+    pass
 
 
 if __name__ == "__main__":
-    gen_table_memo(items)
+    table = gen_table_memo(items)
