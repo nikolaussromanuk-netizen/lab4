@@ -72,21 +72,58 @@ def re_table(table, items, start_points, max_cells):
     return ans, score
 
 
+def output(items, ans):
+    temp = []
+    for i in ans:
+        #print(f"{i} : {items[i]['cells']}")
+        temp.append([items[i]['cells'], i])
+    
+    temp = sorted(temp)[::-1]
+    w = 4
+
+    inv = []
+    row = []
+
+    for count, item in temp:
+        if w - count >= 0:
+            w -= count
+            for _ in range(count):
+                row.append(item)
+        else:
+            w = 4
+            w -= count
+            inv.append(row)
+            row = [item for _ in range(count)]
+
+    inv.append(row)
+
+    for a in inv:
+        for b in range(len(a)):
+            print(f"[{a[b]}]", end="")
+            if b < len(a) - 1:
+                print(',', end="")
+            else:
+                print()
+
 
 def solve(cells=MAX_CELLS):
     global items
-    cells -= items['d']['cells']
+
     temp = items['d']
+
+    cells -= items['d']['cells']
     del items['d']
+
     table = gen_table_memo(items, cells)
+
     ans, score = re_table(table, items, POINTS, cells)
+
     ans.append('d')
     items['d'] = temp
-    sum = 0
-    for i in ans:
-        print(f"{i}: {items[i]['cells']}")
-        sum += items[i]['cells']
-    print(sum, score)
+
+    print(score)
+    output(items, ans)
+
 
 if __name__ == "__main__":
     solve()
