@@ -1,4 +1,4 @@
-MAX_CELLS = 7
+MAX_CELLS = 8
 POINTS = 25
 
 items = {
@@ -49,6 +49,44 @@ def gen_table_memo(items, cells=MAX_CELLS):
     return table
 
 
+def re_table(table, items, start_points, max_cells):
+    names = list(items.keys())
+    n = len(names)
+    ans = []
+    score = start_points
+
+    w = max_cells - 1
+    for i in range(n-1, 0, -1):
+        name = names[i]
+        item = items[name]
+        survival = item['survival']
+        cells = item['cells']
+
+        if cells <= w + 1 and table[i][w] != table[i - 1][w]:
+            ans.append(name)
+            score += survival
+            w -= cells
+        else:
+            score -= survival
+
+    return ans, score
+
+
+
+def solve(cells=MAX_CELLS):
+    global items
+    cells -= items['d']['cells']
+    temp = items['d']
+    del items['d']
+    table = gen_table_memo(items, cells)
+    ans, score = re_table(table, items, POINTS, cells)
+    ans.append('d')
+    items['d'] = temp
+    sum = 0
+    for i in ans:
+        print(f"{i}: {items[i]['cells']}")
+        sum += items[i]['cells']
+    print(sum, score)
+
 if __name__ == "__main__":
-    table = gen_table_memo(items)
-    print(table)
+    solve()
